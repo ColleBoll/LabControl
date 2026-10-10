@@ -5,19 +5,19 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ColleBoll/LabControl/internal/server/response"
 	"github.com/ColleBoll/LabControl/pkg/protocol"
+	"github.com/gin-gonic/gin"
 )
 
-func ReportHandler(w http.ResponseWriter, r *http.Request) {
+func ReportHandler(c *gin.Context) {
 	var report protocol.AgentReport
 
-	if err := json.NewDecoder(r.Body).Decode(&report); err != nil {
-		response.ErrorResponseJSON(w, http.StatusBadRequest, "invalid_request", "invalid request")
+	if err := json.NewDecoder(c.Request.Body).Decode(&report); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"invalid_request": "invalid request"})
 		return
 	}
 
-	response.ReportAccept(w, "Thx agent for the great report!")
+	c.JSON(http.StatusAccepted, "Thx agent for the great report!")
 
 	fmt.Println(report)
 }

@@ -1,17 +1,15 @@
 package api
 
 import (
-	"net/http"
-
 	"github.com/ColleBoll/LabControl/internal/server/api/agents"
+	"github.com/gin-gonic/gin"
 )
 
-func NewRouter() http.Handler {
-	mux := http.NewServeMux()
+func NewRouter() {
+	router := gin.Default()
 
-	mux.HandleFunc("GET /api/v1/health", HealthHandler)
+	router.GET("/api/v1/health", HealthHandler)
+	router.POST("/api/v1/agents/report", agents.ReportHandler)
 
-	mux.HandleFunc("POST /api/v1/agents/report", agents.ReportHandler)
-
-	return mux
+	router.Run(":8080")
 }

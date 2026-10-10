@@ -3,11 +3,9 @@ package api
 import (
 	"net/http"
 
-	"github.com/ColleBoll/LabControl/internal/server/response"
+	"github.com/gin-gonic/gin"
 )
 
-func HealthHandler(w http.ResponseWriter, r *http.Request) {
-	response.JSON(w, http.StatusOK, map[string]string{
-		"status": "ok",
-	})
+func HealthHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"status": "ok"})
 }

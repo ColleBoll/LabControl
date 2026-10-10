@@ -18,7 +18,7 @@ func main() {
 	}
 
 	report := protocol.AgentReport{
-		AgentID:   "server-01",
+		AgentID:   system.Hostname,
 		Timestamp: time.Now(),
 		System:    system,
 	}
