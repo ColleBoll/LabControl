@@ -8,8 +8,8 @@ import (
 
 type Agent struct {
 	gorm.Model
-	ID        string
+	ID        uint `gorm:"primaryKey"`
 	Hostname  string
-	LastSeen  time.Time
+	UpdatedAt time.Time
 	CreatedAt time.Time
 }

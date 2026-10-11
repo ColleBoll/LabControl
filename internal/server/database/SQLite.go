@@ -5,6 +5,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var serverdb *gorm.DB
+
 func OpenDatabase() *gorm.DB {
 	db, err := gorm.Open(sqlite.Open("data/labcontrol-server.db"), &gorm.Config{})
 	if err != nil {
@@ -13,5 +15,14 @@ func OpenDatabase() *gorm.DB {
 
 	db.AutoMigrate(&Agent{})
 
+	serverdb = db
+
 	return db
+}
+
+func GetServerDB() *gorm.DB {
+	if serverdb == nil {
+		return nil
+	}
+	return serverdb
 }
