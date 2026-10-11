@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	server := client.New("http://localhost:8080")
+	api := client.NewAPIClient("http://localhost:8080")
 
 	system, err := collectors.SystemMetrics()
 	if err != nil {
@@ -23,8 +23,9 @@ func main() {
 		System:    system,
 	}
 
-	if err := server.SendReport(report); err != nil {
-		log.Fatal(err)
+	err = client.Send(api, "/api/v1/agents/report", report)
+	if err != nil {
+		log.Println(err)
 	}
 
 	log.Println("Report sent")

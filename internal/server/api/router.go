@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/ColleBoll/LabControl/internal/server/api/agents"
+	"github.com/ColleBoll/LabControl/internal/server/database"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,6 +23,8 @@ func NewRouter() {
 		v1.GET("/health", HealthHandler)
 		v1.POST("/agents/report", agents.ReportHandler)
 	}
+
+	database.OpenDatabase()
 
 	router.Run(":8080")
 }

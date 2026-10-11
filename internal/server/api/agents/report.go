@@ -1,7 +1,6 @@
 package agents
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -12,12 +11,13 @@ import (
 func ReportHandler(c *gin.Context) {
 	var report protocol.AgentReport
 
-	if err := json.NewDecoder(c.Request.Body).Decode(&report); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"invalid_request": "invalid request"})
-		return
+	if err := c.ShouldBindJSON(&report); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid request body",
+		})
 	}
 
-	c.JSON(http.StatusAccepted, "Thx agent for the great report!")
+	fmt.Printf("Agent report recieved: %+v\n", report)
 
-	fmt.Println(report)
+	c.Status(http.StatusAccepted)
 }
